@@ -107,7 +107,7 @@ export const DefineStep = ({ user, setUser, setIsNextDisable }) => {
             Location
           </Typography>
           <Input
-            placeholder="Porto, Portugal"
+            placeholder="City you currently live in"
             onChange={validateStep}
             onBlur={validateStep}
             inputRef={locationRef}
