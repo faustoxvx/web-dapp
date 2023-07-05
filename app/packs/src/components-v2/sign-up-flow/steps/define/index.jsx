@@ -1,6 +1,6 @@
 import { Dropdown, Input, Typography } from "@talentprotocol/design-system";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { genderOptions, nationalityOptions } from "../../../../components/talent/Edit/dropdownValues";
+import { genderOptions, locationOptions, nationalityOptions } from "../../../../components/talent/Edit/dropdownValues";
 import { TitleRow, Row, RowWithMargin, Form } from "./styled";
 import Select from "react-select";
 
@@ -91,15 +91,30 @@ export const DefineStep = ({ user, setUser, setIsNextDisable }) => {
           <Typography specs={{ variant: "p2", type: "bold" }} color="primary01">
             City you currently live in
           </Typography>
-          <Input
-            placeholder="Porto, Portugal"
-            onChange={validateStep}
-            onBlur={validateStep}
-            inputRef={locationRef}
-            defaultValue={user.location}
-            hasError={!!locationError}
-            shortDescription={locationError}
+          <Select
+            classNamePrefix="select"
+            value={{
+              value: location?.value || user.location || "",
+              label: location?.value || user.location || ""
+            }}
+            isClearable={true}
+            isSearchable={true}
+            placeholder="Enter your current location"
+            name="location"
+            options={locationOptions.map(option => ({
+              value: option,
+              label: option
+            }))}
+               inputRef={locationRef}
+               defaultValue={user.location}
+               hasError={!!locationError}
+               shortDescription={locationError}
+            onChange={option => {
+              setLocation(option);
+              validateStep(undefined, option);
+            }}
           />
+         
         </RowWithMargin>
       </Form>
     </>
