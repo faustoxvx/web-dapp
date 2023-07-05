@@ -79,8 +79,8 @@ export const ConfirmEmailStep = ({ user, goToFirstStep, setHasCreateAccountError
     )) || (
       <Container>
         <TitleRow>
-          <Typography specs={{ variant: "h3", type: "bold" }} color="primary01">
-            Lastly, Please check you inbox and confirm your email:
+          <Typography specs={{ variant: "h5", type: "bold" }} color="primary01">
+          Please go to your inbox to confirm your email address. Check your spam folder if you can't find the email.
           </Typography>
           <Typography specs={{ variant: "p2", type: "regular" }} color="primary03">
             {user.email}
