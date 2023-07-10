@@ -12,7 +12,7 @@ import debounce from "lodash/debounce";
 
 dayjs.extend(customParseFormat);
 
-export const CareerUpdate = ({ data, profile, isCurrentUserProfile }) => {
+export const CareerUpdate = ({ data, profile, isCurrentUserProfile, sendCareerUpdateModalState = null }) => {
   const [message, setMessage] = useState("");
 
   const sendNewMessage = () => {
@@ -50,6 +50,9 @@ export const CareerUpdate = ({ data, profile, isCurrentUserProfile }) => {
       <StyledUpdateContent specs={{ variant: "p2", type: "regular" }} color="primary04">
         {data.message}
       </StyledUpdateContent>
+      {sendCareerUpdateModalState && isCurrentUserProfile && (
+        <Button hierarchy="primary" text="Edit update" onClick={sendCareerUpdateModalState.openModal} size="small" />
+      )}
       {!isCurrentUserProfile && (
         <ReplyArea>
           <Input

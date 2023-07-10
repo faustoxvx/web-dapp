@@ -52,6 +52,35 @@ class API::V1::PublicAPI::CareerUpdatesController < API::V1::PublicAPI::APIContr
     render json: response_body, status: :created
   end
 
+  def update
+    service = CareerUpdate::Update.new(
+      career_update: career_update,
+      current_user: current_acting_user,
+      params: career_update_params
+    )
+    updated_career_update = service.call
+
+    render json: CareerUpdateBlueprint.render(updated_career_update, view: :normal), status: :ok
+  rescue CareerUpdates::Update::StartDateAfterEndDateError => e
+    render json: {error: e.message}, status: :unprocessable_entity
+  rescue => e
+    Rollbar.error(
+      e,
+      "Unable to update career update",
+      career_update_id: career_update&.id,
+      talent_id: talent.id
+    )
+    render json: {error: "Unable to update career"}, status: :unprocessable_entity
+  end
+
+  def destroy
+    if career_update.destroy
+      render json: CareerUpdateBlueprint.render(career_update, view: :normal), status: :ok
+    else
+      render json: {error: "Unable to delete requested career update."}, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def user

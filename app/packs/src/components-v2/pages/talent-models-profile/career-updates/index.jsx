@@ -1,4 +1,4 @@
-import { Spinner, Typography, useModal } from "@talentprotocol/design-system";
+import { Spinner, Typography, useModal, Button } from "@talentprotocol/design-system";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTalentCareerUpdatesFetcher } from "../../../../hooks/use-talent-career-updates-fetcher";
 import { CareerUpdateEmptyState } from "./empty-state";
@@ -68,6 +68,7 @@ export const CareerUpdates = ({ profile, currentUserProfile, isCurrentUserProfil
             data={update}
             profile={profile}
             isCurrentUserProfile={isCurrentUserProfile}
+            sendCareerUpdateModalState={sendCareerUpdateModalState}
           />
         ))}
       </>
