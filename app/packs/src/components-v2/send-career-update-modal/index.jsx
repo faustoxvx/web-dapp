@@ -64,8 +64,15 @@ export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile }) => {
     <Modal title="Career update" isOpen={isOpen} closeModal={closeModal} footer={modalFooter}>
       <Container>
         <InLineTextWithComponents specs={{ variant: "p2", type: "regular" }} color="primary03">
-        Think of this updates more as an intimate career log, and less like posting on social media or broadcasting to an audience. Need help to write it? Check some tips
-        <TextLink color="primary" text="here." size="small" href="https://blog.talentprotocol.com/supporter-updates-guide/" newPage />
+          Think of these updates more as an intimate career log, and less like posting on social media or broadcasting
+          to an audience. Need help to write it? Check some tips
+          <TextLink
+            color="primary"
+            text="here."
+            size="small"
+            href="https://blog.talentprotocol.com/supporter-updates-guide/"
+            newPage
+          />
         </InLineTextWithComponents>
         <EntryContainer>
           <TextArea placeholder={`What's new in your career, ${profile?.name}?`} textAreaRef={textAreaRef} />
