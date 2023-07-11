@@ -4,6 +4,7 @@ import { Container, ModalFooter, InLineTextWithComponents, EntryContainer, Pills
 import { toast } from "react-toastify";
 import { careerUpdatesService } from "../../api";
 import { ToastBody } from "src/components/design_system/toasts";
+import ThemedButton from "src/components/design_system/button";
 
 const bootstrapGoals = goals => () =>
   goals.map(goal => ({ content: goal.title, isSelected: false, isDisabled: false, id: goal.id }));
@@ -46,6 +47,12 @@ export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile }) => {
   const modalFooter = useMemo(
     () => (
       <ModalFooter>
+        <ThemedButton
+          type="danger-outline"
+          className="mr-auto cursor-pointer"
+          text="Delete Update"
+          onClick={console.log("click")}
+        />
         <Button hierarchy="tertiary" text="Cancel" onClick={closeModal} size="small" />
         <Button hierarchy="primary" text="Send Update" onClick={sendCareerUpdate} size="small" />
       </ModalFooter>
@@ -64,8 +71,15 @@ export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile }) => {
     <Modal title="Career update" isOpen={isOpen} closeModal={closeModal} footer={modalFooter}>
       <Container>
         <InLineTextWithComponents specs={{ variant: "p2", type: "regular" }} color="primary03">
-        Think of this updates more as an intimate career log, and less like posting on social media or broadcasting to an audience. Need help to write it? Check some tips
-        <TextLink color="primary" text="here." size="small" href="https://blog.talentprotocol.com/supporter-updates-guide/" newPage />
+          Think of this updates more as an intimate career log, and less like posting on social media or broadcasting to
+          an audience. Need help to write it? Check some tips
+          <TextLink
+            color="primary"
+            text="here."
+            size="small"
+            href="https://blog.talentprotocol.com/supporter-updates-guide/"
+            newPage
+          />
         </InLineTextWithComponents>
         <EntryContainer>
           <TextArea placeholder={`What's new in your career, ${profile?.name}?`} textAreaRef={textAreaRef} />

@@ -37,7 +37,7 @@ export const CareerUpdate = ({ data, profile, isCurrentUserProfile, sendCareerUp
 
   return (
     <Container>
-      <AvatarHeader>
+      <AvatarHeader className="d-flex justify-content-between">
         <Avatar size="md" url={profile.profile_picture_url} />
         <Typography specs={{ variant: "label2", type: "medium" }} color="primary01">
           {profile.user.legal_first_name} {profile.user.legal_last_name}
@@ -46,13 +46,16 @@ export const CareerUpdate = ({ data, profile, isCurrentUserProfile, sendCareerUp
         <Typography specs={{ variant: "p2", type: "regular" }} color="primary04">
           {dayjs(data.created_at).format("MMM D, YYYY, h:mm A")}
         </Typography>
+
+        {sendCareerUpdateModalState && isCurrentUserProfile && (
+          <div class="ml-auto">
+            <Button hierarchy="primary" text="Edit" onClick={sendCareerUpdateModalState.openModal} size="small" />
+          </div>
+        )}
       </AvatarHeader>
       <StyledUpdateContent specs={{ variant: "p2", type: "regular" }} color="primary04">
         {data.message}
       </StyledUpdateContent>
-      {sendCareerUpdateModalState && isCurrentUserProfile && (
-        <Button hierarchy="primary" text="Edit update" onClick={sendCareerUpdateModalState.openModal} size="small" />
-      )}
       {!isCurrentUserProfile && (
         <ReplyArea>
           <Input
