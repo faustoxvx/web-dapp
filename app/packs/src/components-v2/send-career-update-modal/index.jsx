@@ -9,7 +9,7 @@ import ThemedButton from "src/components/design_system/button";
 const bootstrapGoals = goals => () =>
   goals.map(goal => ({ content: goal.title, isSelected: false, isDisabled: false, id: goal.id }));
 
-export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile }) => {
+export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile, isCurrentUserProfile }) => {
   const textAreaRef = React.useRef(null);
   const [pills, setPills] = useState(bootstrapGoals(profile.goals));
 
@@ -47,17 +47,26 @@ export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile }) => {
   const modalFooter = useMemo(
     () => (
       <ModalFooter>
-        <ThemedButton
-          type="danger-outline"
-          className="mr-auto cursor-pointer"
-          text="Delete Update"
-          onClick={console.log("click")}
-        />
-        <Button hierarchy="tertiary" text="Cancel" onClick={closeModal} size="small" />
-        <Button hierarchy="primary" text="Send Update" onClick={sendCareerUpdate} size="small" />
+        {isCurrentUserProfile && textAreaRef.current.value === null ? (
+          <>
+            <ThemedButton
+              type="danger-outline"
+              className="mr-auto cursor-pointer"
+              text="Delete Update"
+              onClick={() => console.log("click")}
+            />
+            <Button hierarchy="tertiary" text="Cancel" onClick={closeModal} size="small" />
+            <Button hierarchy="primary" text="Edit Update" onClick={sendCareerUpdate} size="small" />
+          </>
+        ) : (
+          <>
+            <Button hierarchy="tertiary" text="Cancel" onClick={closeModal} size="small" />
+            <Button hierarchy="primary" text="Send Update" onClick={sendCareerUpdate} size="small" />
+          </>
+        )}
       </ModalFooter>
     ),
-    [closeModal, sendCareerUpdate]
+    [closeModal, textAreaRef, sendCareerUpdate]
   );
   const handlePillClick = useCallback(
     index => {

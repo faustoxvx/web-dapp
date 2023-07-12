@@ -37,7 +37,7 @@ export const CareerUpdate = ({ data, profile, isCurrentUserProfile, sendCareerUp
 
   return (
     <Container>
-      <AvatarHeader className="d-flex justify-content-between">
+      <AvatarHeader>
         <Avatar size="md" url={profile.profile_picture_url} />
         <Typography specs={{ variant: "label2", type: "medium" }} color="primary01">
           {profile.user.legal_first_name} {profile.user.legal_last_name}
