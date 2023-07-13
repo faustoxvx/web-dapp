@@ -37,14 +37,14 @@ export const ModalFooter = styled.div`
 `;
 
 export const EntryContainer = styled.div`
-  disply: flex;
+  display: flex;
   flex-direction: column;
 
   > :nth-child(1) {
     margin-bottom: 10px;
 
     textarea {
-    height: 180px;
+      height: 180px;
     }
   }
 `;

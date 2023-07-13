@@ -1,4 +1,4 @@
-import { Spinner, Typography, useModal, Button } from "@talentprotocol/design-system";
+import { Spinner, Typography, useModal } from "@talentprotocol/design-system";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTalentCareerUpdatesFetcher } from "../../../../hooks/use-talent-career-updates-fetcher";
 import { CareerUpdateEmptyState } from "./empty-state";
@@ -12,6 +12,7 @@ export const CareerUpdates = ({ profile, currentUserProfile, isCurrentUserProfil
   const [isLoading, setIsLoading] = useState(true);
   const [isLocked, setIsLocked] = useState(false);
   const { careerUpdates, fetchCareerUpdates } = useTalentCareerUpdatesFetcher();
+  const [updateToEdit, setUpdateToEdit] = useState();
 
   const sendCareerUpdateModalState = useModal();
   useEffect(() => {
@@ -51,6 +52,8 @@ export const CareerUpdates = ({ profile, currentUserProfile, isCurrentUserProfil
             isOpen={sendCareerUpdateModalState.isOpen}
             closeModal={sendCareerUpdateModalState.closeModal}
             profile={currentUserProfile}
+            isCurrentUserProfile={isCurrentUserProfile}
+            updateToEdit={updateToEdit}
           />
         )}
         <InputContainer>
@@ -69,6 +72,7 @@ export const CareerUpdates = ({ profile, currentUserProfile, isCurrentUserProfil
             profile={profile}
             isCurrentUserProfile={isCurrentUserProfile}
             sendCareerUpdateModalState={sendCareerUpdateModalState}
+            setUpdateToEdit={setUpdateToEdit}
           />
         ))}
       </>

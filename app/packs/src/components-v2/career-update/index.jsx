@@ -12,7 +12,13 @@ import debounce from "lodash/debounce";
 
 dayjs.extend(customParseFormat);
 
-export const CareerUpdate = ({ data, profile, isCurrentUserProfile, sendCareerUpdateModalState = null }) => {
+export const CareerUpdate = ({
+  data,
+  profile,
+  isCurrentUserProfile,
+  setUpdateToEdit,
+  sendCareerUpdateModalState = null
+}) => {
   const [message, setMessage] = useState("");
 
   const sendNewMessage = () => {
@@ -34,6 +40,10 @@ export const CareerUpdate = ({ data, profile, isCurrentUserProfile, sendCareerUp
   };
 
   const debouncedNewMessage = debounce(() => sendNewMessage(), 200);
+  const onEditClick = () => {
+    setUpdateToEdit(data);
+    sendCareerUpdateModalState.openModal();
+  };
 
   return (
     <Container>
@@ -48,9 +58,7 @@ export const CareerUpdate = ({ data, profile, isCurrentUserProfile, sendCareerUp
         </Typography>
 
         {sendCareerUpdateModalState && isCurrentUserProfile && (
-          <div class="ml-auto">
-            <Button hierarchy="primary" text="Edit" onClick={sendCareerUpdateModalState.openModal} size="small" />
-          </div>
+          <Button hierarchy="primary" className="ml-auto" text="Edit" onClick={onEditClick} size="small" />
         )}
       </AvatarHeader>
       <StyledUpdateContent specs={{ variant: "p2", type: "regular" }} color="primary04">

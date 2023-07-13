@@ -9,9 +9,11 @@ import ThemedButton from "src/components/design_system/button";
 const bootstrapGoals = goals => () =>
   goals.map(goal => ({ content: goal.title, isSelected: false, isDisabled: false, id: goal.id }));
 
-export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile, isCurrentUserProfile }) => {
+export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile, isCurrentUserProfile, updateToEdit }) => {
   const textAreaRef = React.useRef(null);
   const [pills, setPills] = useState(bootstrapGoals(profile.goals));
+
+  console.log("=======>", updateToEdit);
 
   useEffect(() => {
     if (isOpen) {
@@ -47,7 +49,7 @@ export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile, isCurrent
   const modalFooter = useMemo(
     () => (
       <ModalFooter>
-        {isCurrentUserProfile && textAreaRef.current.value === null ? (
+        {isCurrentUserProfile ? (
           <>
             <ThemedButton
               type="danger-outline"
@@ -66,7 +68,7 @@ export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile, isCurrent
         )}
       </ModalFooter>
     ),
-    [closeModal, textAreaRef, sendCareerUpdate]
+    [closeModal, isCurrentUserProfile, sendCareerUpdate]
   );
   const handlePillClick = useCallback(
     index => {
