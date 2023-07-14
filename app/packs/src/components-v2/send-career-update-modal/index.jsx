@@ -9,7 +9,14 @@ import ThemedButton from "src/components/design_system/button";
 const bootstrapGoals = goals => () =>
   goals.map(goal => ({ content: goal.title, isSelected: false, isDisabled: false, id: goal.id }));
 
-export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile, isCurrentUserProfile, updateToEdit }) => {
+export const SendCareerUpdateModalV2 = ({
+  isOpen,
+  closeModal,
+  profile,
+  isCurrentUserProfile,
+  updateToEdit,
+  closeEditUpdateModal
+}) => {
   const textAreaRef = React.useRef(null);
   const [pills, setPills] = useState(bootstrapGoals(profile.goals));
 
@@ -49,7 +56,7 @@ export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile, isCurrent
   const modalFooter = useMemo(
     () => (
       <ModalFooter>
-        {isCurrentUserProfile ? (
+        {isCurrentUserProfile && updateToEdit !== undefined ? (
           <>
             <ThemedButton
               type="danger-outline"
@@ -57,7 +64,7 @@ export const SendCareerUpdateModalV2 = ({ isOpen, closeModal, profile, isCurrent
               text="Delete Update"
               onClick={() => console.log("click")}
             />
-            <Button hierarchy="tertiary" text="Cancel" onClick={closeModal} size="small" />
+            <Button hierarchy="tertiary" text="Cancel" onClick={closeEditUpdateModal} size="small" />
             <Button hierarchy="primary" text="Edit Update" onClick={sendCareerUpdate} size="small" />
           </>
         ) : (

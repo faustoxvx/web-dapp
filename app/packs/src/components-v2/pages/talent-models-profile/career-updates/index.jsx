@@ -14,6 +14,16 @@ export const CareerUpdates = ({ profile, currentUserProfile, isCurrentUserProfil
   const { careerUpdates, fetchCareerUpdates } = useTalentCareerUpdatesFetcher();
   const [updateToEdit, setUpdateToEdit] = useState();
 
+  //devia ser este closeEditUpdateModel a fechar o Modal do EditCareerUpdates
+  const closeEditUpdateModal = () => {
+    if (updateToEdit !== undefined) {
+      setUpdateToEdit(undefined);
+      sendCareerUpdateModalState.closeModal();
+    } else {
+      sendCareerUpdateModalState.closeModal();
+    }
+  };
+
   const sendCareerUpdateModalState = useModal();
   useEffect(() => {
     fetchCareerUpdates(profile.user.username)
@@ -36,6 +46,7 @@ export const CareerUpdates = ({ profile, currentUserProfile, isCurrentUserProfil
           contractsEnv={railsContext}
           currentUserProfile={currentUserProfile}
           profile={profile}
+          setUpdateToEdit={setUpdateToEdit}
         />
       );
     }
@@ -54,6 +65,8 @@ export const CareerUpdates = ({ profile, currentUserProfile, isCurrentUserProfil
             profile={currentUserProfile}
             isCurrentUserProfile={isCurrentUserProfile}
             updateToEdit={updateToEdit}
+            setUpdateToEdit={setUpdateToEdit}
+            closeEditUpdateModal={closeEditUpdateModal}
           />
         )}
         <InputContainer>
@@ -85,7 +98,8 @@ export const CareerUpdates = ({ profile, currentUserProfile, isCurrentUserProfil
     railsContext,
     isCurrentUserProfile,
     setProfile,
-    currentUserProfile
+    currentUserProfile,
+    closeEditUpdateModal
   ]);
   return <Container>{isLoading ? <Spinner /> : RenderedContent}</Container>;
 };
