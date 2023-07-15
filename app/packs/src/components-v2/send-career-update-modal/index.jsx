@@ -86,7 +86,7 @@ export const SendCareerUpdateModalV2 = ({
     [pills]
   );
   return (
-    <Modal title="Career update" isOpen={isOpen} closeModal={closeModal} footer={modalFooter}>
+    <Modal title="Career update" isOpen={isOpen} closeModal={closeEditUpdateModal} footer={modalFooter}>
       <Container>
         <InLineTextWithComponents specs={{ variant: "p2", type: "regular" }} color="primary03">
           Think of this updates more as an intimate career log, and less like posting on social media or broadcasting to
