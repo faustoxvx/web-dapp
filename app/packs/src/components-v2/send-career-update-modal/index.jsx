@@ -28,6 +28,12 @@ export const SendCareerUpdateModalV2 = ({
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (textAreaRef.current != null) {
+      textAreaRef.current.value = updateToEdit.message;
+    }
+  }, [textAreaRef, isOpen]);
+
   const sendCareerUpdate = useCallback(() => {
     const message = textAreaRef.current.value;
     if (message.replace(/\s+/g, "") == "") {

@@ -14,7 +14,6 @@ export const CareerUpdates = ({ profile, currentUserProfile, isCurrentUserProfil
   const { careerUpdates, fetchCareerUpdates } = useTalentCareerUpdatesFetcher();
   const [updateToEdit, setUpdateToEdit] = useState();
 
-  //devia ser este closeEditUpdateModel a fechar o Modal do EditCareerUpdates
   const closeEditUpdateModal = () => {
     if (updateToEdit !== undefined) {
       setUpdateToEdit(undefined);
