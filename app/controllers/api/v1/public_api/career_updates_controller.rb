@@ -66,7 +66,7 @@ class API::V1::PublicAPI::CareerUpdatesController < API::V1::PublicAPI::APIContr
   rescue => e
     Rollbar.error(
       e,
-      "Unable to update career update",
+      "Unable to edit career update",
       career_update_id: career_update&.id,
       talent_id: talent.id
     )

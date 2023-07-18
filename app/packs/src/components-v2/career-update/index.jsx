@@ -39,6 +39,11 @@ export const CareerUpdate = ({
     });
   };
 
+  //under construction
+  const deleteCareerUpdate = async () => {
+    const response = await destroy(`/api/v1/career_updates/${talent.career_update.id}/goals/${currentJourneyItem.id}`);
+  };
+
   const debouncedNewMessage = debounce(() => sendNewMessage(), 200);
   const onEditClick = () => {
     setUpdateToEdit(data);
@@ -56,7 +61,6 @@ export const CareerUpdate = ({
         <Typography specs={{ variant: "p2", type: "regular" }} color="primary04">
           {dayjs(data.created_at).format("MMM D, YYYY, h:mm A")}
         </Typography>
-
         {sendCareerUpdateModalState && isCurrentUserProfile && (
           <Button hierarchy="primary" className="ml-auto" text="Edit" onClick={onEditClick} size="small" />
         )}

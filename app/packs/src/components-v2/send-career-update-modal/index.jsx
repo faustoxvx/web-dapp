@@ -29,7 +29,7 @@ export const SendCareerUpdateModalV2 = ({
   }, [isOpen]);
 
   useEffect(() => {
-    if (textAreaRef.current != null) {
+    if (updateToEdit !== undefined && textAreaRef.current != null) {
       textAreaRef.current.value = updateToEdit.message;
     }
   }, [textAreaRef, isOpen]);
