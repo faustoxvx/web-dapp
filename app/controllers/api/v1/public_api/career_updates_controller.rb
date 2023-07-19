@@ -70,7 +70,7 @@ class API::V1::PublicAPI::CareerUpdatesController < API::V1::PublicAPI::APIContr
       career_update_id: career_update&.id,
       talent_id: talent.id
     )
-    render json: {error: "Unable to update career"}, status: :unprocessable_entity
+    render json: {error: "Unable to edit career update"}, status: :unprocessable_entity
   end
 
   def destroy

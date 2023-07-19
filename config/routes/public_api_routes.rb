@@ -11,7 +11,7 @@ module PublicAPIRoutes
             resources :supporters, only: [:index]
             resources :activities, only: [:index]
             resources :connections, only: [:index]
-            resources :career_updates, only: [:index, :create]
+            resources :career_updates, only: [:index, :create, :destroy, :update]
             resources :sponsorships, only: [:create]
             get "sponsorships", to: "sponsorships#index"
             get "sponsors", to: "sponsorships#sponsors"
