@@ -8,7 +8,7 @@ const sendUpdate = (message, goals) =>
     }
   });
 
-const destroyCareerUpdate = id => axios.destroy(`/api/v1/career_updates/${id}`);
+const deleteCareerUpdate = id => axios.delete(`/api/v1/career_updates/${id}`);
 
 const editCareerUpdate = (message, goals, id) =>
   axios.update(`/api/v1/career_updates/${id}`, {
@@ -19,5 +19,7 @@ const editCareerUpdate = (message, goals, id) =>
   });
 
 export const careerUpdatesService = {
-  sendUpdate
+  sendUpdate,
+  deleteCareerUpdate,
+  editCareerUpdate
 };

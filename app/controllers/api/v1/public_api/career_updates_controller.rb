@@ -72,10 +72,9 @@ class API::V1::PublicAPI::CareerUpdatesController < API::V1::PublicAPI::APIContr
   end
 
   def destroy
-    if career_update.destroy
-      render json: CareerUpdateBlueprint.render(career_update, view: :normal), status: :ok
-    else
-      render json: {error: "Unable to delete requested career update."}, status: :unprocessable_entity
+    @career_update = CareerUpdate.find_by(uuid: params[:id])
+    if @career_update.present?
+      @career_update.destroy
     end
   end
 

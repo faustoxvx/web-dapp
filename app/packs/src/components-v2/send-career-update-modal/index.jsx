@@ -59,6 +59,46 @@ export const SendCareerUpdateModalV2 = ({
         toast.error(<ToastBody heading="Error!" />, { autoClose: 3000 });
       });
   }, [textAreaRef, pills, closeModal]);
+
+  const sendEditCareerUpdate = useCallback(() => {
+    const message = textAreaRef.current.value;
+    if (message.replace(/\s+/g, "") == "") {
+      return;
+    }
+    const selectedPills = pills.reduce((acc, pill) => {
+      if (pill.isSelected) {
+        acc.push({ id: pill.id });
+      }
+      return acc;
+    }, []);
+    careerUpdatesService
+      .editCareerUpdate(message, selectedPills)
+      .then(() => {
+        toast.success(<ToastBody heading="Success!" body={"Your career update was edited successfully."} />, {
+          autoClose: 3000
+        });
+        closeModal();
+      })
+      .catch(error => {
+        console.error(error);
+        toast.error(<ToastBody heading="Error!" />, { autoClose: 3000 });
+      });
+  }, [textAreaRef, pills, closeModal]);
+
+  const deleteCareerUpdate = useCallback(() => {
+    careerUpdatesService
+      .deleteCareerUpdate(updateToEdit.id)
+      .then(() => {
+        toast.success(<ToastBody heading="Success!" body={"Your career update was deleted successfully."} />, {
+          autoClose: 3000
+        });
+        closeModal();
+      })
+      .catch(error => {
+        console.error(error);
+        toast.error(<ToastBody heading="Error!" />, { autoClose: 3000 });
+      });
+  }, [closeModal, updateToEdit]);
   const modalFooter = useMemo(
     () => (
       <ModalFooter>
@@ -68,7 +108,7 @@ export const SendCareerUpdateModalV2 = ({
               type="danger-outline"
               className="mr-auto cursor-pointer"
               text="Delete Update"
-              onClick={() => console.log("click")}
+              onClick={deleteCareerUpdate}
             />
             <Button hierarchy="tertiary" text="Cancel" onClick={closeEditUpdateModal} size="small" />
             <Button hierarchy="primary" text="Edit Update" onClick={sendCareerUpdate} size="small" />
@@ -81,7 +121,7 @@ export const SendCareerUpdateModalV2 = ({
         )}
       </ModalFooter>
     ),
-    [closeModal, isCurrentUserProfile, sendCareerUpdate]
+    [closeModal, isCurrentUserProfile, sendCareerUpdate, deleteCareerUpdate]
   );
   const handlePillClick = useCallback(
     index => {
