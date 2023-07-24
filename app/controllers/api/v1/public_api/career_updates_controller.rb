@@ -56,12 +56,12 @@ class API::V1::PublicAPI::CareerUpdatesController < API::V1::PublicAPI::APIContr
     @career_update = CareerUpdate.find_by(uuid: params[:id])
     service = CareerUpdates::Update.new(
       career_update: career_update,
-      current_user: current_acting_user,
+      current_user: current_user,
       params: career_update_params
     )
     updated_career_update = service.call
 
-    render json: CareerUpdateBlueprint.render(updated_career_update, view: :normal), status: :ok
+    render json: API::CareerUpdateBlueprint.render(updated_career_update, view: :normal), status: :ok
   rescue => e
     Rollbar.error(
       e,
