@@ -58,7 +58,7 @@ export const SendCareerUpdateModalV2 = ({
         console.error(error);
         toast.error(<ToastBody heading="Error!" />, { autoClose: 3000 });
       });
-  }, [textAreaRef, pills, closeModal]);
+  }, [textAreaRef, pills, updateToEdit, closeModal]);
 
   const sendEditCareerUpdate = useCallback(() => {
     const message = textAreaRef.current.value;
@@ -72,7 +72,7 @@ export const SendCareerUpdateModalV2 = ({
       return acc;
     }, []);
     careerUpdatesService
-      .editCareerUpdate(message, selectedPills)
+      .editCareerUpdate(message, selectedPills, updateToEdit.id)
       .then(() => {
         toast.success(<ToastBody heading="Success!" body={"Your career update was edited successfully."} />, {
           autoClose: 3000
@@ -83,7 +83,7 @@ export const SendCareerUpdateModalV2 = ({
         console.error(error);
         toast.error(<ToastBody heading="Error!" />, { autoClose: 3000 });
       });
-  }, [textAreaRef, pills, closeModal]);
+  }, [textAreaRef, pills, updateToEdit, closeModal]);
 
   const deleteCareerUpdate = useCallback(() => {
     careerUpdatesService
@@ -111,7 +111,7 @@ export const SendCareerUpdateModalV2 = ({
               onClick={deleteCareerUpdate}
             />
             <Button hierarchy="tertiary" text="Cancel" onClick={closeEditUpdateModal} size="small" />
-            <Button hierarchy="primary" text="Edit Update" onClick={sendCareerUpdate} size="small" />
+            <Button hierarchy="primary" text="Edit Update" onClick={sendEditCareerUpdate} size="small" />
           </>
         ) : (
           <>
@@ -121,7 +121,7 @@ export const SendCareerUpdateModalV2 = ({
         )}
       </ModalFooter>
     ),
-    [closeModal, isCurrentUserProfile, sendCareerUpdate, deleteCareerUpdate]
+    [closeModal, isCurrentUserProfile, updateToEdit, sendCareerUpdate, deleteCareerUpdate]
   );
   const handlePillClick = useCallback(
     index => {
