@@ -39,11 +39,6 @@ export const CareerUpdate = ({
     });
   };
 
-  //under construction
-  const deleteCareerUpdate = async () => {
-    const response = await destroy(`/api/v1/career_updates/${talent.career_update.id}/goals/${currentJourneyItem.id}`);
-  };
-
   const debouncedNewMessage = debounce(() => sendNewMessage(), 200);
   const onEditClick = () => {
     setUpdateToEdit(data);

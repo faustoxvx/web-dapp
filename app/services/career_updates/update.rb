@@ -5,6 +5,7 @@ module CareerUpdates
       @message = params[:message]
       @goals = params[:goals]
       @career_update = career_update
+      @career_update_associations = params[:career_update_associations]
     end
 
     def call
@@ -25,7 +26,6 @@ module CareerUpdates
     def update_career_update
       ActiveRecord::Base.transaction do
         @career_update.update!(text: message) if @career_update.text != message
-
         @career_update.career_update_associations.destroy_all
         goals&.each do |goal|
           goal = Goal.find(goal[:id])

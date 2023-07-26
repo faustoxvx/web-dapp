@@ -9,6 +9,22 @@ import ThemedButton from "src/components/design_system/button";
 const bootstrapGoals = goals => () =>
   goals.map(goal => ({ content: goal.title, isSelected: false, isDisabled: false, id: goal.id }));
 
+const teste = {
+  goals: [
+    {
+      id: 666,
+      title: "This is the fake gooal"
+    },
+    {
+      id: 777,
+      title: "Fake Goal"
+    }
+  ]
+};
+
+const fakeGoalPill = teste => () =>
+  teste.map(test => ({ content: test.title, isSelected: true, isDisabled: false, id: test.id }));
+
 export const SendCareerUpdateModalV2 = ({
   isOpen,
   closeModal,
@@ -18,13 +34,14 @@ export const SendCareerUpdateModalV2 = ({
   closeEditUpdateModal
 }) => {
   const textAreaRef = React.useRef(null);
-  const [pills, setPills] = useState(bootstrapGoals(profile.goals));
+  const [pills, setPills] = useState(fakeGoalPill(teste.goals));
 
-  console.log("=======>", updateToEdit);
+  console.log("=======>", profile);
 
   useEffect(() => {
     if (isOpen) {
-      setPills(bootstrapGoals(profile.goals));
+      setPills(fakeGoalPill(teste.goals));
+      console.log("===========>>>", profile);
     }
   }, [isOpen]);
 
