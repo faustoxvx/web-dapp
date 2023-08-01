@@ -6,24 +6,46 @@ import { careerUpdatesService } from "../../api";
 import { ToastBody } from "src/components/design_system/toasts";
 import ThemedButton from "src/components/design_system/button";
 
-const bootstrapGoals = goals => () =>
-  goals.map(goal => ({ content: goal.title, isSelected: false, isDisabled: false, id: goal.id }));
+const bootstrapGoals = (goals, career_update_associations) => {
+  // {id:, career_update_id:, :associable_entity_type, :associable_entity_id }
+  // [1,2,3,4,5].includes(2)
+
+  const findAssociation = goal => {
+    return career_update_associations?.length > 0
+      ? career_update_associations.find(c => c.associable_entity_id === goal.id)
+      : false;
+  };
+
+  return goals.map(goal => ({
+    content: goal.title,
+    isSelected: !!findAssociation(goal),
+    isDisabled: false,
+    id: goal.id
+  }));
+};
 
 const teste = {
   goals: [
     {
       id: 666,
-      title: "This is the fake gooal"
+      title: "This fake goal is SELECTED",
+      associated_with_career_update: true
     },
     {
       id: 777,
-      title: "Fake Goal"
+      title: "This one is NOT",
+      associated_with_career_update: false
     }
   ]
 };
 
 const fakeGoalPill = teste => () =>
-  teste.map(test => ({ content: test.title, isSelected: true, isDisabled: false, id: test.id }));
+  teste.map(test => ({
+    content: test.title,
+    isSelected: test.associated_with_career_update,
+    isDisabled: false,
+    id: test.id
+  }));
 
 export const SendCareerUpdateModalV2 = ({
   isOpen,
@@ -34,14 +56,18 @@ export const SendCareerUpdateModalV2 = ({
   closeEditUpdateModal
 }) => {
   const textAreaRef = React.useRef(null);
-  const [pills, setPills] = useState(fakeGoalPill(teste.goals));
+  const [pills, setPills] = useState(bootstrapGoals(profile.goals, updateToEdit?.career_update_associations));
 
-  console.log("=======>", profile);
+  // updateToEdit.career_update_associations => {id:, career_update_id:, :associable_entity_type, :associable_entity_id }
+  console.log("=======> UPDATE TO EDIT: ", updateToEdit);
+  // profile.goals => {id:, title:}
+  console.log("=======> GOALS: ", profile.goals);
+  // {content:, isSelected, isDisabled, id: }
 
   useEffect(() => {
     if (isOpen) {
-      setPills(fakeGoalPill(teste.goals));
-      console.log("===========>>>", profile);
+      setPills(bootstrapGoals(profile.goals, updateToEdit?.career_update_associations));
+      console.log("===========>>>", teste.goals);
     }
   }, [isOpen]);
 
