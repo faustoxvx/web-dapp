@@ -56,9 +56,11 @@ export const CareerUpdate = ({
         <Typography specs={{ variant: "p2", type: "regular" }} color="primary04">
           {dayjs(data.created_at).format("MMM D, YYYY, h:mm A")}
         </Typography>
-        {sendCareerUpdateModalState && isCurrentUserProfile && (
-          <Button hierarchy="primary" className="ml-auto" text="Edit" onClick={onEditClick} size="small" />
-        )}
+        <div className="ml-auto">
+          {sendCareerUpdateModalState && isCurrentUserProfile && (
+            <Button hierarchy="primary" className="ml-auto" text="Edit" onClick={onEditClick} size="small" />
+          )}
+        </div>
       </AvatarHeader>
       <StyledUpdateContent specs={{ variant: "p2", type: "regular" }} color="primary04">
         {data.message}

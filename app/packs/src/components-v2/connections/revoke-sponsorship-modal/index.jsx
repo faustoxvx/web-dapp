@@ -16,6 +16,7 @@ export const RevokeSponsorshipModal = ({ modalState, sponsorship, railsContext, 
     modalState.closeModal();
     stepsState.jumpToStep(1);
   }, [modalState.closeModal, stepsState.jumpToStep]);
+
   return (
     <Modal title="Cancel sponsorship?" isOpen={modalState.isOpen} closeModal={closeModal}>
       {
