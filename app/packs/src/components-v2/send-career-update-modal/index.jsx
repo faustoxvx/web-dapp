@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { careerUpdatesService } from "../../api";
 import { ToastBody } from "src/components/design_system/toasts";
 import ThemedButton from "src/components/design_system/button";
+import { DeleteConfirmationModal } from "src/components-v2/delete-confirmation-modal";
 
 const bootstrapGoals = (goals, career_update_associations) => {
   const findAssociation = goal => {
@@ -31,6 +32,15 @@ export const SendCareerUpdateModalV2 = ({
 }) => {
   const textAreaRef = React.useRef(null);
   const [pills, setPills] = useState(bootstrapGoals(profile.goals, updateToEdit?.career_update_associations));
+  const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+
+  const handleDeleteCancel = () => {
+    setDeleteConfirmationOpen(false);
+  };
+
+  const onDeleteClick = () => {
+    setDeleteConfirmationOpen(true);
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -96,6 +106,7 @@ export const SendCareerUpdateModalV2 = ({
   }, [textAreaRef, pills, updateToEdit, closeModal]);
 
   const deleteCareerUpdate = useCallback(() => {
+    setDeleteConfirmationOpen(false);
     careerUpdatesService
       .deleteCareerUpdate(updateToEdit.id)
       .then(() => {
@@ -118,7 +129,7 @@ export const SendCareerUpdateModalV2 = ({
               type="danger-outline"
               className="mr-auto cursor-pointer"
               text="Delete Update"
-              onClick={deleteCareerUpdate}
+              onClick={onDeleteClick}
             />
             <Button hierarchy="tertiary" text="Cancel" onClick={closeEditUpdateModal} size="small" />
             <Button hierarchy="primary" text="Edit Update" onClick={sendEditCareerUpdate} size="small" />
@@ -141,43 +152,52 @@ export const SendCareerUpdateModalV2 = ({
     },
     [pills]
   );
+
   return (
-    <Modal title="Career update" isOpen={isOpen} closeModal={closeEditUpdateModal} footer={modalFooter}>
-      <Container>
-        <InLineTextWithComponents specs={{ variant: "p2", type: "regular" }} color="primary03">
-          Think of this updates more as an intimate career log, and less like posting on social media or broadcasting to
-          an audience. Need help to write it? Check some tips
-          <TextLink
-            color="primary"
-            text="here."
-            size="small"
-            href="https://blog.talentprotocol.com/supporter-updates-guide/"
-            newPage
-          />
-        </InLineTextWithComponents>
-        <EntryContainer>
-          <TextArea placeholder={`What's new in your career, ${profile?.name}?`} textAreaRef={textAreaRef} />
-          <InLineTextWithComponents specs={{ variant: "p2", type: "regular" }} color="primary04">
-            Do you need help writing your career update? Ask our community on
-            <TextLink color="primary" text="Discord." size="small" href="https://discord.gg/talentprotocol" />
+    <>
+      <Modal title="Career update" isOpen={isOpen} closeModal={closeEditUpdateModal} footer={modalFooter}>
+        <Container>
+          <InLineTextWithComponents specs={{ variant: "p2", type: "regular" }} color="primary03">
+            Think of this updates more as an intimate career log, and less like posting on social media or broadcasting
+            to an audience. Need help to write it? Check some tips
+            <TextLink
+              color="primary"
+              text="here."
+              size="small"
+              href="https://blog.talentprotocol.com/supporter-updates-guide/"
+              newPage
+            />
           </InLineTextWithComponents>
-        </EntryContainer>
-        <PillsContainer>
-          <Typography specs={{ variant: "p2", type: "bold" }} color="primary01">
-            Tag your goals
-          </Typography>
-          {!!pills.length ? (
-            <Pills pillList={pills} onClick={handlePillClick} />
-          ) : (
-            <EntryContainer>
-              <InLineTextWithComponents specs={{ variant: "p2", type: "regular" }} color="primary04">
-                Updates are even more useful if associated with goals. Create your first goal
-                <TextLink color="primary" text="here." size="small" href={`/u/${profile.username}`} />
-              </InLineTextWithComponents>
-            </EntryContainer>
-          )}
-        </PillsContainer>
-      </Container>
-    </Modal>
+          <EntryContainer>
+            <TextArea placeholder={`What's new in your career, ${profile?.name}?`} textAreaRef={textAreaRef} />
+            <InLineTextWithComponents specs={{ variant: "p2", type: "regular" }} color="primary04">
+              Do you need help writing your career update? Ask our community on
+              <TextLink color="primary" text="Discord." size="small" href="https://discord.gg/talentprotocol" />
+            </InLineTextWithComponents>
+          </EntryContainer>
+          <PillsContainer>
+            <Typography specs={{ variant: "p2", type: "bold" }} color="primary01">
+              Tag your goals
+            </Typography>
+            {!!pills.length ? (
+              <Pills pillList={pills} onClick={handlePillClick} />
+            ) : (
+              <EntryContainer>
+                <InLineTextWithComponents specs={{ variant: "p2", type: "regular" }} color="primary04">
+                  Updates are even more useful if associated with goals. Create your first goal
+                  <TextLink color="primary" text="here." size="small" href={`/u/${profile.username}`} />
+                </InLineTextWithComponents>
+              </EntryContainer>
+            )}
+          </PillsContainer>
+        </Container>
+      </Modal>
+      <DeleteConfirmationModal
+        isOpen={isDeleteConfirmationOpen}
+        confirmDelete={deleteCareerUpdate}
+        cancelDelete={handleDeleteCancel}
+        resourceName={"Career Update"}
+      />
+    </>
   );
 };
