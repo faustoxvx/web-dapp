@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import { AvatarHeader, Container, ReplyArea, StyledUpdateContent } from "./styled";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { post } from "src/utils/requests";
-
 import { toast } from "react-toastify";
 import { ToastBody } from "src/components/design_system/toasts";
 
