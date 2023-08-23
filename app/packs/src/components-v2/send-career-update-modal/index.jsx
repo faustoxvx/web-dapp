@@ -1,7 +1,6 @@
 import { Button, Modal, Pills, TextArea, TextLink, Typography } from "@talentprotocol/design-system";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Container, ModalFooter, InLineTextWithComponents, EntryContainer, PillsContainer } from "./styled";
-//import { Container, InLineTextWithComponents, ModalFooter } from "../delete-confirmation-modal/styled";
 import { toast } from "react-toastify";
 import { careerUpdatesService } from "../../api";
 import { ToastBody } from "src/components/design_system/toasts";
