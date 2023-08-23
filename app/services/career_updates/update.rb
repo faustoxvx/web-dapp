@@ -14,7 +14,6 @@ module CareerUpdates
         raise "Error editing career update. The owner is different than the requester"
       end
 
-      puts "[CareerUpdates::Update] Call received."
       career_update = update_career_update
       career_update.reload
     end

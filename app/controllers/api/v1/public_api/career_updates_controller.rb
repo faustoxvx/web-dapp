@@ -72,9 +72,11 @@ class API::V1::PublicAPI::CareerUpdatesController < API::V1::PublicAPI::APIContr
   end
 
   def destroy
-    @career_update = CareerUpdate.find_by(uuid: params[:id])
-    if @career_update.present?
-      @career_update.destroy
+    @career_update = CareerUpdate.find_by!(uuid: params[:id])
+    if @career_update.destroy
+      render json: {success: "Successfully deleted Career Update"}, status: :no_content
+    else
+      render json: {error: "Unable to delete Career Update"}, status: :unprocessable_entity
     end
   end
 
